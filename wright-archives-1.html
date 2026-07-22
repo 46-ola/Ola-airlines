@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ola Airlines | Wright Archives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a1128;
+    --navy-mid:#121a3a;
+    --gold:#f0b429;
+    --gold-soft:#f5c518;
+    --parchment:#f3ecd9;
+    --parchment-line:#d8c9a3;
+    --ink:#2b2116;
+    --off-white:#eef1fa;
+    --sky:#9db8e8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--navy-deep);
+    color:var(--off-white);
+  }
+
+  /* NAV (matches Home page)*/
+  header.site-header{
+    background:var(--navy-deep);
+    text-align:center;
+    padding:28px 20px 18px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  header.site-header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    letter-spacing:4px;
+    font-size:2.1rem;
+    margin:0;
+    color:#fff;
+  }
+  header.site-header p.tagline{
+    color:var(--sky);
+    margin:6px 0 20px;
+    font-size:1rem;
+  }
+  nav.main-nav{
+    display:flex;
+    justify-content:center;
+    gap:44px;
+    flex-wrap:wrap;
+  }
+  nav.main-nav a{
+    color:#dfe6f5;
+    text-decoration:none;
+    font-size:1.02rem;
+    font-weight:500;
+    padding-bottom:6px;
+  }
+  nav.main-nav a.active{
+    color:var(--gold-soft);
+    border-bottom:2px solid var(--gold-soft);
+  }
+
+  /* HERO */
+  .hero{
+    padding:70px 24px 60px;
+    text-align:center;
+    background:
+      radial-gradient(ellipse at top, rgba(240,180,41,0.08), transparent 60%),
+      var(--navy-deep);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    letter-spacing:3px;
+    font-size:0.8rem;
+    text-transform:uppercase;
+  }
+  .hero h2{
+    font-family:'Playfair Display',serif;
+    font-size:2.6rem;
+    margin:14px 0 10px;
+    color:#fff;
+  }
+  .hero p{
+    max-width:640px;
+    margin:0 auto;
+    color:#c7cfe6;
+    line-height:1.6;
+    font-size:1.05rem;
+  }
+
+  section{
+    max-width:1040px;
+    margin:0 auto;
+    padding:64px 24px;
+  }
+  section h3.section-title{
+    font-family:'Playfair Display',serif;
+    font-size:1.9rem;
+    color:#fff;
+    margin:0 0 8px;
+  }
+  section p.section-lede{
+    color:#aeb7d1;
+    max-width:680px;
+    margin:0 0 40px;
+    line-height:1.6;
+  }
+
+  /* BIO CARDS  */
+  .bios{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  @media (max-width:760px){ .bios{grid-template-columns:1fr;} }
+  .bio-card{
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.08);
+    border-top:3px solid var(--gold-soft);
+    padding:30px 28px;
+    border-radius:4px;
+  }
+  .bio-card .years{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    font-size:0.85rem;
+    letter-spacing:1px;
+  }
+  .bio-card h4{
+    font-family:'Playfair Display',serif;
+    font-size:1.5rem;
+    margin:6px 0 14px;
+    color:#fff;
+  }
+  .bio-card p{
+    color:#c7cfe6;
+    line-height:1.7;
+    font-size:0.97rem;
+  }
+
+  /* TIMELINE */
+  .timeline{
+    position:relative;
+    margin-top:10px;
+    padding-left:26px;
+    border-left:2px solid rgba(240,180,41,0.35);
+  }
+  .timeline-item{
+    position:relative;
+    padding-bottom:30px;
+  }
+  .timeline-item:last-child{padding-bottom:0;}
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-32px;
+    top:4px;
+    width:11px;
+    height:11px;
+    background:var(--gold-soft);
+    border-radius:50%;
+    box-shadow:0 0 0 4px var(--navy-deep);
+  }
+  .timeline-item .date{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    font-size:0.85rem;
+  }
+  .timeline-item h5{
+    margin:4px 0 4px;
+    color:#fff;
+    font-size:1.05rem;
+  }
+  .timeline-item p{
+    margin:0;
+    color:#aeb7d1;
+    font-size:0.93rem;
+    line-height:1.6;
+    max-width:600px;
+  }
+
+  /* PATENT / DOCUMENT CARD (signature element)*/
+  .patent-card{
+    background:var(--parchment);
+    color:var(--ink);
+    border-radius:2px;
+    padding:40px 40px 34px;
+    position:relative;
+    box-shadow:0 18px 40px rgba(0,0,0,0.35);
+    overflow:hidden;
+  }
+  .patent-card::after{
+    content:'PATENTED';
+    position:absolute;
+    right:-18px;
+    top:22px;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:2.6rem;
+    color:rgba(43,33,22,0.06);
+    transform:rotate(-14deg);
+    letter-spacing:6px;
+    pointer-events:none;
+  }
+  .patent-card .patent-no{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.85rem;
+    letter-spacing:1px;
+    color:#6b5a3a;
+    border-bottom:1px solid var(--parchment-line);
+    padding-bottom:14px;
+    margin-bottom:18px;
+  }
+  .patent-card h4{
+    font-family:'Playfair Display',serif;
+    font-size:1.4rem;
+    margin:0 0 14px;
+  }
+  .patent-card p{
+    line-height:1.75;
+    font-size:0.97rem;
+    max-width:640px;
+  }
+  .patent-links{
+    margin-top:22px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .patent-links a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid var(--parchment-line);
+    padding:9px 14px;
+    text-decoration:none;
+    border-radius:3px;
+  }
+  .patent-links a:hover{ border-color:var(--ink); }
+
+  /*GALLERY */
+  .gallery{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:760px){ .gallery{grid-template-columns:1fr;} }
+  figure{
+    margin:0;
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  figure img{
+    width:100%;
+    display:block;
+    filter:sepia(15%) contrast(1.02);
+  }
+  figcaption{
+    padding:14px 18px 18px;
+    font-size:0.85rem;
+    color:#aeb7d1;
+    line-height:1.5;
+  }
+  figcaption .credit{
+    display:block;
+    margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:#77809e;
+  }
+  figcaption .credit a{ color:#9db8e8; }
+
+  /* DOWNLOADS  */
+  .downloads{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:760px){ .downloads{grid-template-columns:1fr;} }
+  .download-card{
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:26px;
+    border-radius:4px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .download-card .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:var(--gold-soft);
+    letter-spacing:1px;
+  }
+  .download-card h5{ margin:0; color:#fff; font-size:1.05rem; }
+  .download-card p{ margin:0; color:#aeb7d1; font-size:0.9rem; line-height:1.55; }
+  .download-card a.btn{
+    align-self:flex-start;
+    margin-top:6px;
+    background:var(--gold-soft);
+    color:var(--navy-deep);
+    text-decoration:none;
+    font-weight:600;
+    padding:9px 18px;
+    border-radius:30px;
+    font-size:0.88rem;
+  }
+
+  footer{
+    text-align:center;
+    padding:34px 20px;
+    color:#6b7494;
+    font-size:0.82rem;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>OLA AIRLINES</h1>
+  <p class="tagline">where horizons expand</p>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="wright-archives.html" class="active">Wright Archives</a>
+    <a href="aero-quiz.html">Aero Quiz</a>
+    <a href="my-journey.html">My Journey</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Dayton, Ohio · Kitty Hawk, North Carolina</div>
+  <h2>The Wright Archives</h2>
+  <p>Two bicycle makers from Dayton who taught the world to fly. Explore their story, the patent that protected it, and the photographs that proved it happened.</p>
+</div>
+
+<!-- 1. BIOGRAPHIES -->
+<section>
+  <h3 class="section-title">The Brothers</h3>
+  <p class="section-lede">Neither Wilbur nor Orville Wright finished a university degree. Everything they knew about lift, control, and structure, they taught themselves , first with bicycles, then with kites, then with the sky itself.</p>
+
+  <div class="bios">
+    <div class="bio-card">
+      <div class="years">1867 — 1912</div>
+      <h4>Wilbur Wright</h4>
+      <p>The elder of the two, Wilbur was the one who first became obsessed with flight after reading about the death of glider pioneer Otto Lilienthal in 1896. He was methodical and quietly stubborn, the one who wrote most of their technical correspondence and who insisted on years of unmanned kite testing before ever trusting a glider with a human pilot. It was Wilbur who worked out that control, not just lift, was the real problem no one else had solved ; an insight that led to wing-warping, the twisting of a wing's tips to bank and steer. He died of typhoid fever in 1912, at just 45, having lived only long enough to see the beginning of the aviation age he started.</p>
+    </div>
+    <div class="bio-card">
+      <div class="years">1871 — 1948</div>
+      <h4>Orville Wright</h4>
+      <p>Four years younger than Wilbur, Orville was the more instinctive builder of the pair ; sharper with machinery, more willing to tinker until something simply worked. He piloted the Flyer on its first, twelve-second hop over the dunes of Kitty Hawk on December 17, 1903. After Wilbur's death, Orville carried the company and the legacy alone for decades, watching bicycles give way to biplanes and biplanes give way to airliners. He lived to see the jet age begin, dying in 1948, forty-five years almost to the day after the flight that started it all.</p>
+    </div>
+  </div>
+</section>
+
+<!--  2. TIMELINE  -->
+<section>
+  <h3 class="section-title">From Bicycle Shop to Kitty Hawk</h3>
+  <p class="section-lede">A working timeline of the years that mattered most.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">1892</div>
+      <h5>The Wright Cycle Company opens in Dayton</h5>
+      <p>The brothers' bicycle repair and manufacturing shop became their engineering laboratory  and their main source of income while they chased flight.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">1899 — 1902</div>
+      <h5>Kites, then gliders, at Kitty Hawk</h5>
+      <p>Three seasons of unpowered glider trials on the Outer Banks, chosen for its steady winds and soft sand. By 1902 they had a glider they could reliably control in all three axes.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">March 23, 1903</div>
+      <h5>Patent application filed</h5>
+      <p>Before they had even flown under power, the brothers filed for a patent on their flight-control system ; the part of the invention they considered truly original.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">December 17, 1903</div>
+      <h5>First powered flight</h5>
+      <p>Orville flew the Wright Flyer for 12 seconds and roughly 120 feet at Kill Devil Hills. Three more flights followed that morning, the longest covering 852 feet in 59 seconds.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">1904 — 1905</div>
+      <h5>Huffman Prairie</h5>
+      <p>Back in Ohio, the Flyer II and Flyer III turned a brief hop into sustained, controlled, circling flight : the first truly practical airplane.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">May 22, 1906</div>
+      <h5>Patent No. 821,393 granted</h5>
+      <p>After a rejection and the hiring of patent attorney Henry Toulmin, the U.S. Patent Office granted the Wrights' "Flying-Machine" patent ; protecting their method of control, not any one aircraft design.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">1908 — 1909</div>
+      <h5>Public demonstrations and the Wright Company</h5>
+      <p>Public flights in France and for the U.S. Army silenced doubters who had never seen the brothers fly. The Wright Company was founded in 1909 to manufacture aircraft commercially.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PATENT DOCUMENT -->
+<section>
+  <h3 class="section-title">The Patent</h3>
+  <p class="section-lede">What the Wrights actually protected wasn't a shape : it was an idea about control.</p>
+
+  <div class="patent-card">
+    <div class="patent-no">US Patent No. 821,393 &nbsp;·&nbsp; Filed March 23, 1903 &nbsp;·&nbsp; Granted May 22, 1906</div>
+    <h4>"Flying-Machine" : Orville and Wilbur Wright, of Dayton, Ohio</h4>
+    <p>The patent's real subject is a control system, not a specific airframe: a way of warping a wing's trailing edges to bank the aircraft, combined with a moveable rear rudder to counteract drag and a forward elevator for pitch ; the three-axis control scheme that every fixed-wing aircraft still uses today. It was originally written and filed by the brothers themselves and rejected; only after they hired an Ohio patent attorney in 1904 did the claims hold up. The document that followed ran to seven pages of description, far longer than most patents of its era.</p>
+    <div class="patent-links">
+      <a href="https://patents.google.com/patent/US821393A/en" target="_blank" rel="noopener">Full patent text &amp; drawings — Google Patents ↗</a>
+      <a href="https://www.archives.gov/college-park/highlights/wright-patent" target="_blank" rel="noopener">Original scanned patent — U.S. National Archives ↗</a>
+    </div>
+  </div>
+</section>
+
+<!--  4. ARCHIVAL PHOTOGRAPHS  -->
+<section>
+  <h3 class="section-title">Archival Photographs</h3>
+  <p class="section-lede">Public-domain images from the Library of Congress collection, hosted via Wikimedia Commons.</p>
+
+  <div class="gallery">
+    <figure>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/First_flight2.jpg" alt="The first powered flight of the Wright Flyer, December 17, 1903, Orville piloting while Wilbur runs alongside">
+      <figcaption>
+        The first flight, December 17, 1903 — 12 seconds, roughly 120 feet, Kill Devil Hills, North Carolina.
+        <span class="credit">Public domain, Library of Congress · via <a href="https://commons.wikimedia.org/wiki/File:First_flight2.jpg" target="_blank" rel="noopener">Wikimedia Commons</a></span>
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wright Brothers 1903-Flying-Machine-On-Launching-Track.jpg" alt="The 1903 Wright Flyer on its launching track before flight">
+      <figcaption>
+        The 1903 Flyer on its wooden launching rail, used to help the aircraft reach flying speed on level ground.
+        <span class="credit">Public domain · via <a href="https://commons.wikimedia.org/wiki/Category:Wright_Flyer" target="_blank" rel="noopener">Wikimedia Commons</a></span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!--  5. DOWNLOADS -->
+<section>
+  <h3 class="section-title">Consult the Sources</h3>
+  <p class="section-lede">For readers who want the primary material rather than the summary.</p>
+
+  <div class="downloads">
+    <div class="download-card">
+      <div class="tag">PDF · 7 PAGES</div>
+      <h5>Patent No. 821,393 - full text and drawings</h5>
+      <p>The complete "Flying-Machine" patent as filed, with the original claim language and technical drawings.</p>
+      <a class="btn" href="https://patents.google.com/patent/US821393A/en" target="_blank" rel="noopener">Open on Google Patents</a>
+    </div>
+    <div class="download-card">
+      <div class="tag">CATALOG RECORD</div>
+      <h5>National Archives — original scanned patent</h5>
+      <p>The physical document as held by the U.S. National Archives at College Park, Maryland, with catalog metadata.</p>
+      <a class="btn" href="https://www.archives.gov/college-park/highlights/wright-patent" target="_blank" rel="noopener">View at archives.gov</a>
+      
+    </div>
+  </div>
+</section>
+
+<footer>
+  Ola Airlines · Wright Archives — content compiled and written for educational purposes. Historical images and documents are public domain / linked to their original sources.
+</footer>
+
+</body>
+</html>

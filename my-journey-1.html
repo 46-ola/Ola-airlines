@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ola Airlines | My Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a1128;
+    --navy-mid:#121a3a;
+    --gold:#f0b429;
+    --gold-soft:#f5c518;
+    --off-white:#eef1fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--navy-deep);
+    color:var(--off-white);
+  }
+  header.site-header{
+    background:var(--navy-deep);
+    text-align:center;
+    padding:28px 20px 18px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  header.site-header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    letter-spacing:4px;
+    font-size:2.1rem;
+    margin:0;
+    color:#fff;
+  }
+  header.site-header p.tagline{
+    color:#9db8e8;
+    margin:6px 0 20px;
+    font-size:1rem;
+  }
+  nav.main-nav{
+    display:flex;
+    justify-content:center;
+    gap:44px;
+    flex-wrap:wrap;
+  }
+  nav.main-nav a{
+    color:#dfe6f5;
+    text-decoration:none;
+    font-size:1.02rem;
+    font-weight:500;
+    padding-bottom:6px;
+  }
+  nav.main-nav a.active{
+    color:var(--gold-soft);
+    border-bottom:2px solid var(--gold-soft);
+  }
+
+  .hero{
+    padding:64px 24px 20px;
+    text-align:center;
+  }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    letter-spacing:3px;
+    font-size:0.8rem;
+    text-transform:uppercase;
+  }
+  .hero h2{
+    font-family:'Playfair Display',serif;
+    font-size:2.5rem;
+    margin:14px 0 10px;
+    color:#fff;
+  }
+  .hero p{
+    max-width:600px;
+    margin:0 auto;
+    color:#c7cfe6;
+    line-height:1.7;
+    font-size:1.05rem;
+  }
+
+  section{
+    max-width:820px;
+    margin:0 auto;
+    padding:56px 24px;
+  }
+  section h3.section-title{
+    font-family:'Playfair Display',serif;
+    font-size:1.8rem;
+    color:#fff;
+    margin:0 0 8px;
+  }
+  section p.section-lede{
+    color:#aeb7d1;
+    max-width:640px;
+    margin:0 0 36px;
+    line-height:1.6;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    border-left:2px solid rgba(240,180,41,0.35);
+  }
+  .timeline-item{
+    position:relative;
+    padding-bottom:32px;
+  }
+  .timeline-item:last-child{padding-bottom:0;}
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-32px;
+    top:4px;
+    width:11px;
+    height:11px;
+    background:var(--gold-soft);
+    border-radius:50%;
+    box-shadow:0 0 0 4px var(--navy-deep);
+  }
+  .timeline-item.current::before{
+    background:#fff;
+    box-shadow:0 0 0 4px var(--navy-deep), 0 0 0 6px var(--gold-soft);
+  }
+  .timeline-item .date{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    font-size:0.85rem;
+  }
+  .timeline-item h5{
+    margin:4px 0 6px;
+    color:#fff;
+    font-size:1.1rem;
+  }
+  .timeline-item p{
+    margin:0;
+    color:#aeb7d1;
+    font-size:0.95rem;
+    line-height:1.65;
+    max-width:640px;
+  }
+  .timeline-item .badge{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:1px;
+    color:var(--navy-deep);
+    background:var(--gold-soft);
+    padding:2px 8px;
+    border-radius:20px;
+    margin-left:10px;
+    vertical-align:middle;
+  }
+
+  /* ---------- PROJECT CARD ---------- */
+  .project-card{
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.08);
+    border-top:3px solid var(--gold-soft);
+    padding:30px 28px;
+    border-radius:6px;
+    margin-bottom:20px;
+  }
+  .project-card .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.75rem;
+    color:var(--gold-soft);
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .project-card h4{
+    font-family:'Playfair Display',serif;
+    font-size:1.3rem;
+    margin:8px 0 12px;
+    color:#fff;
+  }
+  .project-card p{
+    color:#c7cfe6;
+    line-height:1.7;
+    font-size:0.96rem;
+    margin:0 0 16px;
+  }
+  .project-card a.btn{
+    display:inline-block;
+    background:transparent;
+    border:1px solid var(--gold-soft);
+    color:var(--gold-soft);
+    text-decoration:none;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:0.88rem;
+    font-weight:600;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .skill-pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.85rem;
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.12);
+    color:#dfe6f5;
+    padding:8px 16px;
+    border-radius:30px;
+  }
+
+  /* ---------- HORIZON QUOTE ---------- */
+  .horizon{
+    text-align:center;
+    padding:70px 24px 90px;
+  }
+  .horizon p{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:1.5rem;
+    max-width:600px;
+    margin:0 auto;
+    color:#fff;
+    line-height:1.5;
+  }
+  .horizon span{
+    display:block;
+    margin-top:16px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.8rem;
+    color:var(--gold-soft);
+    letter-spacing:1px;
+  }
+
+  footer{
+    text-align:center;
+    padding:34px 20px;
+    color:#6b7494;
+    font-size:0.82rem;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>OLA AIRLINES</h1>
+  <p class="tagline">where horizons expand</p>
+  <nav class="main-nav">
+    <a href="airline.html">Home</a>
+    <a href="wright-archives.html">Wright Archives</a>
+    <a href="aero-quiz.html">Aero Quiz</a>
+    <a href="my-journey.html" class="active">My Journey</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Abomey, Bénin → the sky</div>
+  <h2>My Journey</h2>
+  <p>Ola Airlines started as a way to share a story I'm still living: the road from a bicycle-shop kind of curiosity to an aeronautical engineering degree — and, eventually, wings that can change shape mid-flight.</p>
+</div>
+
+<!-- ============ TIMELINE ============ -->
+<section>
+  <h3 class="section-title">The Road So Far</h3>
+  <p class="section-lede">Every step that got me closer to aeronautics.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="date">2016</div>
+      <h5>CEP — Certificat d'Études Primaires</h5>
+      <p>The first certificate, and the first proof to myself that steady, patient work pays off.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2020</div>
+      <h5>BEPC</h5>
+      <p>Middle school completed — the years where math and physics started feeling less like subjects and more like a language I wanted to speak fluently.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">2023</div>
+      <h5>Baccalauréat — Mention Bien</h5>
+      <p>High school finished with distinction, and with a clear idea of where I wanted to go next: engineering, and specifically, flight.</p>
+    </div>
+    <div class="timeline-item current">
+      <div class="date">2024 — Present <span class="badge">CURRENT</span></div>
+      <h5>Classes Préparatoires aux Études d'Ingénieurs (CPEI), INSPEI / UNSTIM — Abomey</h5>
+      <p>Now in my second year (CP2), specializing in Engineering. Between the Frobenius method, Bessel functions, Markov chains, and ballistic trajectory projects in MATLAB/Octave, this is where the theory starts turning into something I can actually build.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="date">Ahead</div>
+      <h5>Engineering degree → research → PhD</h5>
+      <p>The long-term target is a PhD at a top aeronautics research institution — MIT among them — working on adaptive and morphing wing structures.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS-->
+<section>
+  <h3 class="section-title">What I'm Building</h3>
+  <p class="section-lede">Aeronautics isn't just coursework — it's also what I build on my own time.</p>
+
+  <div class="project-card">
+    <div class="tag">Personal Project · React</div>
+    <h4>Morphing Wing Simulator</h4>
+    <p>An interactive simulator exploring ailes à géométrie variable (variable-geometry wings) — built around NACA airfoil theory, aerodynamic formulas, and comparisons with real aircraft. It's the project where my coursework and my curiosity about adaptive aerostructures meet.</p>
+    <a class="btn" href="#" target="_blank" rel="noopener">View on GitHub →</a>
+  </div>
+
+  <div class="project-card">
+    <div class="tag">Field of Interest</div>
+    <h4>Adaptive & Morphing Wing Structures</h4>
+    <p>The research direction I keep coming back to: wings that change shape in flight to optimize lift and drag for different phases of flight, the way a bird's wing does instinctively. Institutions doing serious work here — ISAE-SUPAERO, LARCASE at ÉTS Montréal, TU Delft — are on my radar for where this could eventually lead.</p>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section>
+  <h3 class="section-title">Tools I'm Building With</h3>
+  <p class="section-lede">Still growing this list — one course, one project at a time.</p>
+
+  <div class="skills">
+    <span class="skill-pill">Python</span>
+    <span class="skill-pill">MATLAB / Octave</span>
+    <span class="skill-pill">NACA Airfoil Theory</span>
+    <span class="skill-pill">React</span>
+    <span class="skill-pill">Applied Mathematics</span>
+    <span class="skill-pill">English (TOEFL track)</span>
+  </div>
+</section>
+
+<div class="horizon">
+  <p>"Where horizons expand" isn't just the airline's tagline — it's the plan."</p>
+  <span>— OLA AIRLINES, MY JOURNEY</span>
+</div>
+
+<footer>
+  Ola Airlines · My Journey — a personal record of the road toward aeronautical engineering.
+</footer>
+
+</body>
+</html>

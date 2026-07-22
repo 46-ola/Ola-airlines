@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ola Airlines | Aero Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a1128;
+    --navy-mid:#121a3a;
+    --gold:#f0b429;
+    --gold-soft:#f5c518;
+    --off-white:#eef1fa;
+    --good:#3ecf8e;
+    --bad:#e5555a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--navy-deep);
+    color:var(--off-white);
+    min-height:100vh;
+  }
+  header.site-header{
+    background:var(--navy-deep);
+    text-align:center;
+    padding:28px 20px 18px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  header.site-header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    letter-spacing:4px;
+    font-size:2.1rem;
+    margin:0;
+    color:#fff;
+  }
+  header.site-header p.tagline{
+    color:#9db8e8;
+    margin:6px 0 20px;
+    font-size:1rem;
+  }
+  nav.main-nav{
+    display:flex;
+    justify-content:center;
+    gap:44px;
+    flex-wrap:wrap;
+  }
+  nav.main-nav a{
+    color:#dfe6f5;
+    text-decoration:none;
+    font-size:1.02rem;
+    font-weight:500;
+    padding-bottom:6px;
+  }
+  nav.main-nav a.active{
+    color:var(--gold-soft);
+    border-bottom:2px solid var(--gold-soft);
+  }
+
+  .hero{
+    padding:56px 24px 20px;
+    text-align:center;
+  }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--gold-soft);
+    letter-spacing:3px;
+    font-size:0.8rem;
+    text-transform:uppercase;
+  }
+  .hero h2{
+    font-family:'Playfair Display',serif;
+    font-size:2.4rem;
+    margin:14px 0 10px;
+    color:#fff;
+  }
+  .hero p{
+    max-width:560px;
+    margin:0 auto;
+    color:#c7cfe6;
+    line-height:1.6;
+  }
+
+  .quiz-wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:30px 24px 80px;
+  }
+
+  .progress-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    color:#9db8e8;
+    margin-bottom:10px;
+  }
+  .progress-track{
+    height:5px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:34px;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--gold-soft);
+    width:0%;
+    transition:width 0.3s ease;
+  }
+
+  .card{
+    background:var(--navy-mid);
+    border:1px solid rgba(255,255,255,0.08);
+    border-top:3px solid var(--gold-soft);
+    border-radius:6px;
+    padding:32px 28px;
+  }
+  .card .cat{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.75rem;
+    letter-spacing:1px;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .card h3{
+    font-family:'Playfair Display',serif;
+    font-size:1.35rem;
+    line-height:1.4;
+    margin:0 0 24px;
+    color:#fff;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .option{
+    text-align:left;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.12);
+    color:var(--off-white);
+    padding:14px 16px;
+    border-radius:5px;
+    font-size:0.97rem;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+    transition:border-color 0.15s, background 0.15s;
+  }
+  .option:hover:not(.locked){
+    border-color:var(--gold-soft);
+    background:rgba(240,180,41,0.08);
+  }
+  .option.correct{
+    border-color:var(--good);
+    background:rgba(62,207,142,0.12);
+  }
+  .option.wrong{
+    border-color:var(--bad);
+    background:rgba(229,85,90,0.12);
+  }
+  .option.locked{ cursor:default; }
+
+  .explanation{
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px dashed rgba(255,255,255,0.15);
+    font-size:0.9rem;
+    color:#aeb7d1;
+    line-height:1.6;
+    display:none;
+  }
+  .explanation.show{ display:block; }
+
+  .next-btn{
+    margin-top:24px;
+    background:var(--gold-soft);
+    color:var(--navy-deep);
+    border:none;
+    padding:11px 26px;
+    border-radius:30px;
+    font-weight:600;
+    font-size:0.95rem;
+    cursor:pointer;
+    display:none;
+  }
+  .next-btn.show{ display:inline-block; }
+
+  .result-card{
+    text-align:center;
+    display:none;
+  }
+  .result-card.show{ display:block; }
+  .result-card .score{
+    font-family:'Playfair Display',serif;
+    font-size:3.2rem;
+    color:var(--gold-soft);
+    margin:10px 0;
+  }
+  .result-card p{ color:#c7cfe6; line-height:1.6; }
+  .result-card .retry{
+    margin-top:20px;
+    background:transparent;
+    border:1px solid var(--gold-soft);
+    color:var(--gold-soft);
+    padding:11px 26px;
+    border-radius:30px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    padding:34px 20px;
+    color:#6b7494;
+    font-size:0.82rem;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>OLA AIRLINES</h1>
+  <p class="tagline">where horizons expand</p>
+  <nav class="main-nav">
+    <a href="airline.html">Home</a>
+    <a href="wright-archives.html">Wright Archives</a>
+    <a href="aero-quiz.html" class="active">Aero Quiz</a>
+    <a href="my-journey.html">My Journey</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">History &amp; Aerodynamics</div>
+  <h2>Test Your Knowledge</h2>
+  <p>18 questions mixing the story of the Wright brothers with the basic physics that keeps any aircraft in the air.</p>
+</div>
+
+<div class="quiz-wrap">
+  <div id="quizArea">
+    <div class="progress-row">
+      <span id="progressText">Question 1 / 18</span>
+      <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="card" id="questionCard">
+      <div class="cat" id="questionCat">Category</div>
+      <h3 id="questionText">Question</h3>
+      <div class="options" id="optionsArea"></div>
+      <div class="explanation" id="explanation"></div>
+      <button class="next-btn" id="nextBtn">Next question →</button>
+    </div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <div class="cat">Quiz complete</div>
+    <div class="score" id="finalScore">0 / 18</div>
+    <p id="finalMessage">Nice work.</p>
+    <button class="retry" id="retryBtn">Try again</button>
+  </div>
+</div>
+
+<footer>
+  Ola Airlines · Aero Quiz — 18 questions on aviation history and aerodynamics.
+</footer>
+
+<script>
+const questions = [
+  { cat:"History", q:"In what year did Wilbur and Orville Wright open their bicycle shop in Dayton, Ohio?", options:["1885","1892","1899","1903"], answer:1, exp:"The Wright Cycle Company opened in 1892, ten years before their glider work matured." },
+  { cat:"Aerodynamics", q:"Which of the four forces of flight acts to pull an aircraft downward?", options:["Thrust","Lift","Weight","Drag"], answer:2, exp:"Weight (gravity) pulls the aircraft down; lift must exceed it for the aircraft to climb or stay level." },
+  { cat:"History", q:"Where did the Wright brothers conduct their first powered flight?", options:["Dayton, Ohio","Kill Devil Hills, North Carolina","Huffman Prairie, Ohio","Le Mans, France"], answer:1, exp:"The first powered flight took place at Kill Devil Hills, near Kitty Hawk, North Carolina, on December 17, 1903." },
+  { cat:"Aerodynamics", q:"What term describes the angle between the wing's chord line and the oncoming airflow?", options:["Angle of attack","Angle of incidence","Dihedral angle","Sweep angle"], answer:0, exp:"Angle of attack is the angle between the chord line and the relative wind; increasing it (up to a point) increases lift." },
+  { cat:"History", q:"How long did the first powered flight last?", options:["2 seconds","12 seconds","59 seconds","3 minutes"], answer:1, exp:"Orville's first flight lasted about 12 seconds and covered roughly 120 feet." },
+  { cat:"Aerodynamics", q:"What happens to a wing when the angle of attack becomes too steep?", options:["It gains more lift indefinitely","It stalls, losing lift suddenly","It accelerates","Drag disappears"], answer:1, exp:"Past the critical angle of attack, airflow separates from the wing's upper surface and lift collapses — a stall." },
+  { cat:"History", q:"What was the Wright brothers' original method of roll control called?", options:["Ailerons","Wing-warping","Spoilers","Flaperons"], answer:1, exp:"Wing-warping twisted the wingtips to change lift on each side, letting the pilot bank the aircraft — later replaced industry-wide by ailerons." },
+  { cat:"Aerodynamics", q:"Which principle is commonly used to explain how a wing's shape helps generate lift?", options:["Newton's third law only", "Archimedes' principle", "Bernoulli's principle (pressure differences across the wing)", "Pascal's law"], answer:2, exp:"A simplified explanation of lift often cites Bernoulli's principle: faster airflow over the curved upper surface corresponds to lower pressure than below the wing. (In reality, lift is a combination of pressure differences and the downward deflection of air, described more completely by Newtonian and Bernoulli effects together.)" },
+  { cat:"History", q:"What was the number of the Wrights' 1906 patent for their flying-machine control system?", options:["US 445,001","US 821,393","US 100,000","US 1,000,000"], answer:1, exp:"U.S. Patent No. 821,393, 'Flying-Machine,' was granted on May 22, 1906, after being filed in March 1903." },
+  { cat:"Aerodynamics", q:"What is 'drag' in the context of flight?", options:["The force pushing the aircraft forward", "The resistance the air exerts against an aircraft's motion", "The force keeping the aircraft airborne", "A type of engine failure"], answer:1, exp:"Drag is the aerodynamic force that opposes an aircraft's motion through the air, working against thrust." },
+  { cat:"History", q:"Which Wright brother actually piloted the Flyer on December 17, 1903?", options:["Wilbur", "Orville", "Both together", "Neither — it was unmanned"], answer:1, exp:"Orville piloted the first flight; Wilbur piloted a longer flight later that same morning." },
+  { cat:"Aerodynamics", q:"What does 'thrust' refer to in aircraft flight?", options:["The downward pull of gravity", "The force that moves the aircraft forward, usually from an engine or propeller", "The upward force from the wings", "Air resistance"], answer:1, exp:"Thrust is the forward-driving force, produced by a propeller, jet engine, or rocket, that overcomes drag." },
+  { cat:"History", q:"Where did the Wrights refine their aircraft into a practical, sustained flyer in 1904–1905?", options:["Kitty Hawk, NC", "Huffman Prairie, Ohio", "Paris, France", "Fort Myer, Virginia"], answer:1, exp:"Huffman Prairie, near Dayton, is where the Flyer II and Flyer III achieved sustained, controllable, circling flight." },
+  { cat:"Aerodynamics", q:"A wing's cross-sectional shape is called its:", options:["Fuselage", "Airfoil", "Empennage", "Spar"], answer:1, exp:"The airfoil is the cross-sectional shape of a wing or blade, engineered to generate lift efficiently." },
+  { cat:"History", q:"In what year did Wilbur Wright die, and from what cause?", options:["1912, typhoid fever", "1948, old age", "1903, a flying accident", "1920, influenza"], answer:0, exp:"Wilbur died in 1912 at age 45 from typhoid fever, only nine years after the first flight." },
+  { cat:"Aerodynamics", q:"Why do modern airliner wings use ailerons instead of wing-warping?", options:["Ailerons are heavier and more traditional", "Rigid metal and composite wings can't twist the way the Wrights' fabric-covered wings did", "Wing-warping is illegal", "Ailerons make aircraft slower"], answer:1, exp:"As aircraft moved from flexible, fabric-covered wooden wings to rigid metal structures, hinged aileron surfaces replaced the twisting motion wing-warping relied on." },
+  { cat:"History", q:"What powered the 1903 Wright Flyer's propellers?", options:["A steam engine", "A lightweight gasoline engine the Wrights built themselves", "An electric motor", "A rubber-band motor"], answer:1, exp:"Since no manufacturer offered a light enough engine, the Wrights and their mechanic Charlie Taylor built their own 12-horsepower gasoline engine." },
+  { cat:"Aerodynamics", q:"What is the purpose of a rudder on an aircraft?", options:["To control roll", "To control yaw (left-right rotation around a vertical axis)", "To control altitude directly", "To generate thrust"], answer:1, exp:"The rudder controls yaw, rotating the aircraft's nose left or right around its vertical axis — the Wrights' rear rudder served this purpose." }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const progressText = document.getElementById('progressText');
+const scoreText = document.getElementById('scoreText');
+const progressFill = document.getElementById('progressFill');
+const questionCat = document.getElementById('questionCat');
+const questionText = document.getElementById('questionText');
+const optionsArea = document.getElementById('optionsArea');
+const explanation = document.getElementById('explanation');
+const nextBtn = document.getElementById('nextBtn');
+const quizArea = document.getElementById('quizArea');
+const resultCard = document.getElementById('resultCard');
+const finalScore = document.getElementById('finalScore');
+const finalMessage = document.getElementById('finalMessage');
+const retryBtn = document.getElementById('retryBtn');
+
+function renderQuestion(){
+  answered = false;
+  const q = questions[current];
+  progressText.textContent = `Question ${current+1} / ${questions.length}`;
+  scoreText.textContent = `Score: ${score}`;
+  progressFill.style.width = `${(current/questions.length)*100}%`;
+  questionCat.textContent = q.cat;
+  questionText.textContent = q.q;
+  explanation.classList.remove('show');
+  explanation.textContent = '';
+  nextBtn.classList.remove('show');
+  optionsArea.innerHTML = '';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectAnswer(idx));
+    optionsArea.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx){
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const optionButtons = optionsArea.querySelectorAll('.option');
+  optionButtons.forEach((btn, i) => {
+    btn.classList.add('locked');
+    if(i === q.answer) btn.classList.add('correct');
+    if(i === idx && idx !== q.answer) btn.classList.add('wrong');
+  });
+  if(idx === q.answer) score++;
+  scoreText.textContent = `Score: ${score}`;
+  explanation.textContent = q.exp;
+  explanation.classList.add('show');
+  nextBtn.classList.add('show');
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult(){
+  quizArea.style.display = 'none';
+  resultCard.classList.add('show');
+  finalScore.textContent = `${score} / ${questions.length}`;
+  let msg = '';
+  const pct = score / questions.length;
+  if(pct === 1) msg = "Perfect score — you know your Wright history and your aerodynamics cold.";
+  else if(pct >= 0.7) msg = "Strong result. A few details to brush up on, but you clearly know your aviation.";
+  else if(pct >= 0.4) msg = "Decent start. Revisit the Wright Archives page and try again.";
+  else msg = "Room to grow — head back to the Wright Archives page for a refresher.";
+  finalMessage.textContent = msg;
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0;
+  score = 0;
+  resultCard.classList.remove('show');
+  quizArea.style.display = 'block';
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+
+</body>
+</html>
